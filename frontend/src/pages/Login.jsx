@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [motDePasse, setMotDePasse] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ const Login = () => {
     setError("");
 
     try {
-      const data = await login(email, motDePasse);
+      const data = await login(email, password);
 
       // Sauvegarde du token ou user
       localStorage.setItem("user", JSON.stringify(data));
@@ -45,8 +45,8 @@ const Login = () => {
           <label>Mot de passe :</label>
           <input
             type="password"
-            value={motDePasse}
-            onChange={(e) => setMotDePasse(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             style={{ width: "100%", padding: "8px" }}
           />
