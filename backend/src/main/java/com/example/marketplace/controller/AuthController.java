@@ -2,6 +2,8 @@ package com.example.marketplace.controller;
 
 import com.example.marketplace.model.User;
 import com.example.marketplace.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +11,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")  // ✅ POUR LE FRONTEND
 public class AuthController {
 
     private final UserService userService;
 
+    @Autowired
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -24,7 +28,7 @@ public class AuthController {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // Vérifie le mot de passe en clair (temporairement)
+            // 🔐 Vérifie le mot de passe
             if (user.getPassword().equals(loginRequest.getPassword())) {
                 return ResponseEntity.ok(user);
             } else {
@@ -35,8 +39,7 @@ public class AuthController {
         }
     }
 
-
-    // Classe interne pour recevoir email & mot de passe
+    // ✅ Classe interne pour recevoir email & mot de passe
     public static class LoginRequest {
         private String email;
         private String password;

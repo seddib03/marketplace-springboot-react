@@ -14,6 +14,7 @@ const Login = () => {
 
     try {
       const data = await login(email, password);
+      console.log("Réponse backend :", data);
 
       // Sauvegarde du token ou user
       localStorage.setItem("user", JSON.stringify(data));
