@@ -2,6 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
+
 const Navbar = () => {
   return (
     <nav style={{ padding: "10px 20px", background: "#282c34", color: "white", display: "flex", justifyContent: "space-between" }}>
@@ -20,6 +22,7 @@ const Navbar = () => {
         <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
           Panier
         </Link>
+        <Link to="/admin" style={{ margin: "0 10px" }}>Espace Admin</Link>
       </div>
     </nav>
   );
