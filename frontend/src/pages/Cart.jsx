@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import { placeOrder } from "../services/api"; // Assure-toi que ce fichier existe
+import { placeOrder } from "../services/api";
 import CartItem from "../components/CartItem";
 
 const Cart = () => {
@@ -23,7 +23,7 @@ const Cart = () => {
     try {
       const orderData = {
         userId: user.id,
-        items: cartItems.map(item => ({
+        items: cartItems.map((item) => ({
           productId: item.id,
           quantity: item.quantity || 1,
           price: item.price,
@@ -31,9 +31,9 @@ const Cart = () => {
         totalPrice: total,
       };
 
-      await placeOrder(orderData); // <- Envoie la commande
+      await placeOrder(orderData);
       alert("Commande passée avec succès !");
-      clearCart(); // <- Vide le panier seulement si ça a marché
+      clearCart();
     } catch (error) {
       console.error("Erreur de commande :", error);
       alert("Erreur lors du passage de la commande");
@@ -41,43 +41,40 @@ const Cart = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>🛒Votre panier</h2>
+    <div className="p-6 max-w-3xl mx-auto bg-white rounded-md shadow-md">
+      <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+        🛒 Votre panier
+      </h2>
 
       {cartItems.length === 0 ? (
-        <p>Votre panier est vide.</p>
+        <p className="text-gray-500">Votre panier est vide.</p>
       ) : (
         <>
-          <ul style={{ padding: 0 }}>
+          <ul className="divide-y divide-gray-200 mb-4">
             {cartItems.map((item, index) => (
               <CartItem key={index} item={item} index={index} />
             ))}
           </ul>
 
-          <h3>Total : {total.toFixed(2)} €</h3>
+          <h3 className="text-xl font-bold text-right mb-6">
+            Total : {total.toFixed(2)} €
+          </h3>
 
-          <button
-            onClick={handlePlaceOrder}
-            style={{
-              backgroundColor: "green",
-              color: "white",
-              padding: "10px",
-              marginRight: "10px",
-            }}
-          >
-            ✅Passer la commande
-          </button>
+          <div className="flex flex-wrap justify-end gap-4">
+            <button
+              onClick={handlePlaceOrder}
+              className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md transition"
+            >
+              ✅ Passer la commande
+            </button>
 
-          <button
-            onClick={clearCart}
-            style={{
-              backgroundColor: "red",
-              color: "white",
-              padding: "10px",
-            }}
-          >
-           ❌ Vider le panier
-          </button>
+            <button
+              onClick={clearCart}
+              className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md transition"
+            >
+              ❌ Vider le panier
+            </button>
+          </div>
         </>
       )}
     </div>
