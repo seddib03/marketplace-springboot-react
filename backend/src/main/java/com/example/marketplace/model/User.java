@@ -4,8 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "users")
@@ -82,6 +85,17 @@ public class User {
         ROLE_USER,
         ROLE_ADMIN
     }
+
+	public void setRoles(Set<Role> of) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Collection<? extends GrantedAuthority> getRoles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
 }
 
 

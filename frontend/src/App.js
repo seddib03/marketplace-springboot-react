@@ -11,6 +11,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AddProduct from "./pages/AddProduct";
 import AdminLogin from "./pages/AdminLogin";
 import Inscription from "./pages/Inscription";
+import { CartProvider } from "./context/CartContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 
 
 function App() {
@@ -23,9 +26,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin" element={<ProtectedRoute adminOnly> <AdminDashboard /></ProtectedRoute>}/>
           <Route path="/admin/add-product" element={<AddProduct />} />
           <Route path="/register" element={<Inscription />} />
+          <Route path="/CartContext" element={<CartProvider />} />
         </Routes>
       </div>
     </Router>

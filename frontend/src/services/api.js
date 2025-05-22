@@ -27,7 +27,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8083/api",
+  baseURL: "http://localhost:8080/api", // adapter si besoin
   headers: {
     "Content-Type": "application/json",
   },
@@ -47,7 +47,6 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Gérer la déconnexion si le token est invalide
       localStorage.removeItem("user");
       window.location.href = "/login";
     }
@@ -55,24 +54,20 @@ API.interceptors.response.use(
   }
 );
 
-export async function login(email, password) {
-  // Supprimer tout token existant avant la connexion
-  localStorage.removeItem("user");
-
-  const response = await fetch("http://localhost:8083/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ email, password })
-  });
-
-  if (!response.ok) {
-    throw new Error("Échec de la connexion");
+// Fonction login avec axios
+export const login = async (email, password) => {
+  try {
+    const response = await API.post("/auth/login", { email, password });
+    // Supposons que la réponse contient { token: "...", user: {...} }
+    const userData = response.data;
+    // Stocker les infos utilisateur + token dans le localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+    return userData;
+  } catch (error) {
+    // Tu peux améliorer la gestion d’erreur ici
+    throw new Error(error.response?.data?.message || "Échec de la connexion");
   }
-
-  return response.json();
-}
+};
 
 export const register = async (userData) => {
   try {
@@ -101,5 +96,19 @@ export const addProduct = async (product) => {
     throw new Error(error.response?.data?.message || "Failed to add product");
   }
 };
+
+export const placeOrder = async (orderData) => {
+  const res = await fetch("/api/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(orderData),
+  });
+  return res.json();
+};
+export const getOrdersByUser = async (userId) => {
+  const res = await fetch(`/api/orders/user/${userId}`);
+  return res.json();
+};
+
 
 export default API;

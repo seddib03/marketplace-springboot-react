@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import CartItem from "../components/CartItem";
 
 const Cart = () => {
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  const { cartItems, clearCart } = useContext(CartContext);
 
   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: "20px" }}>
       <h2>Votre panier</h2>
+
       {cartItems.length === 0 ? (
         <p>Votre panier est vide.</p>
       ) : (
-        <div>
-          {cartItems.map((item, index) => (
-            <div key={index} style={{ marginBottom: "10px", borderBottom: "1px solid #ddd" }}>
-              <h4>{item.name}</h4>
-              <p>{item.price} €</p>
-            </div>
-          ))}
-          <h3>Total : {total} €</h3>
-          <button>Passer commande</button>
-        </div>
+        <>
+          <ul style={{ padding: 0 }}>
+            {cartItems.map((item, index) => (
+              <CartItem key={index} item={item} index={index} />
+            ))}
+          </ul>
+
+          <h3>Total : {total.toFixed(2)} €</h3>
+          <button onClick={clearCart} style={{ backgroundColor: "red", color: "white", padding: "10px" }}>
+            Vider le panier
+          </button>
+        </>
       )}
     </div>
   );
