@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddProduct from "./pages/AddProduct";
 import AdminLogin from "./pages/AdminLogin";
+import Inscription from "./pages/Inscription";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/add-product" element={<AddProduct />} />
+          <Route path="/register" element={<Inscription />} />
         </Routes>
       </div>
     </Router>

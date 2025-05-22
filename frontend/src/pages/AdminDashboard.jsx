@@ -6,11 +6,14 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || user.role !== "admin") {
-      navigate("/admin/login");
-    }
-  }, [navigate]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("Utilisateur récupéré depuis le localStorage :", user);
+
+  if (!user || user.role !== "ROLE_ADMIN") {
+    navigate("/admin/login");
+  }
+}, [navigate]);
+
 
   return (
     <div style={{ padding: "20px" }}>

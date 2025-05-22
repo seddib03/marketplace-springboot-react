@@ -14,10 +14,12 @@ const AdminLogin = () => {
     setError("");
 
     try {
+      
+    console.log("Attempting login with:", { email, password });
       const data = await login(email, password);
 
       // Vérifie si c'est un admin
-      if (data.role === "admin") {
+      if (data.roles && data.roles.includes("ROLE_ADMIN")){
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/admin"); // redirige vers le dashboard
       } else {

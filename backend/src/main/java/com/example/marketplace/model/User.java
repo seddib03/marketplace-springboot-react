@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,9 +24,7 @@ public class User {
 
     private String password;
 
-    // Relation avec le panier (un utilisateur a un panier)
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
+
 
     // Exemple de relation avec les rôles (optionnel, selon besoins)
     // @ManyToMany(fetch = FetchType.EAGER)
@@ -69,6 +68,19 @@ public class User {
 
     public Cart getCart() {
         return cart;
+    }
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
+
+    public enum Role {
+        ROLE_USER,
+        ROLE_ADMIN
     }
 }
 
