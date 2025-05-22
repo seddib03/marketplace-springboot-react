@@ -18,9 +18,7 @@ import com.example.marketplace.model.Role;
 @AllArgsConstructor
 public class User {
 
-    public static Object Role;
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
