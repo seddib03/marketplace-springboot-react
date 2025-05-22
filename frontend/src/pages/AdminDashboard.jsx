@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   console.log("Utilisateur récupéré depuis le localStorage :", user);
 
-  if (!user || !user.roles.includes("ROLE_ADMIN")) {
+  if (!user || !Array.isArray(user.roles) || !user.roles.includes("ROLE_ADMIN")) {
     navigate("/admin/login");
   }
 }, [navigate]);

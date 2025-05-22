@@ -1,10 +1,12 @@
 package com.example.marketplace.controller;
 
 import com.example.marketplace.model.User;
+import com.example.marketplace.model.Role;
 import com.example.marketplace.payload.JwtResponse;
 import com.example.marketplace.repository.UserRepository;
 import com.example.marketplace.security.JwtUtils;
 import com.example.marketplace.security.UserDetailsImpl;
+import com.example.marketplace.security.UserDetailsServiceImpl;
 import com.example.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +27,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
+	@Autowired
 
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final JwtUtils jwtUtils;
-    private final PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+	@Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,
@@ -44,11 +52,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    	System.out.println("Tentative de login pour : " + loginRequest.getEmail());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(),
                             loginRequest.getPassword()));
+            System.out.println("Authentification réussie !");
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
@@ -84,7 +94,7 @@ public class AuthController {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRoles(Set.of(User.Role.ROLE_USER));
+        user.setRoles(Set.of(Role.ROLE_USER));
 
         userRepository.save(user);
 

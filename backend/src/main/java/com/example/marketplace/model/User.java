@@ -1,5 +1,6 @@
 package com.example.marketplace.model;
 import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
-
+import com.example.marketplace.model.Role;
 @Entity
 @Table(name = "users")
 @Data
@@ -17,7 +18,9 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 public class User {
 
-    @Id
+    public static Object Role;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -81,20 +84,19 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
-    public enum Role {
-        ROLE_USER,
-        ROLE_ADMIN
-    }
+    
 
 	public void setRoles(Set<Role> of) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public Collection<? extends GrantedAuthority> getRoles() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Role> getRoles() {
+		return roles;
 	}
+	
+
+	
     
 }
 

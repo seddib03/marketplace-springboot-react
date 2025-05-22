@@ -3,7 +3,7 @@ package com.example.marketplace.config;
 
 
 import com.example.marketplace.model.User;
-import com.example.marketplace.model.User.Role;
+import com.example.marketplace.model.Role;
 import com.example.marketplace.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
