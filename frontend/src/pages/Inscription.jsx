@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 
-
 const Inscription = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -39,24 +38,24 @@ const Inscription = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     if (!validateForm()) return;
 
     setIsLoading(true);
-    
+
     try {
       await API.post("/auth/register", {
         username: formData.username,
         email: formData.email,
         password: formData.password
       });
-      
+
       setSuccess(true);
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      const errorMsg = err.response?.data?.message || 
-                      err.message || 
-                      "Erreur lors de l'inscription";
+      const errorMsg = err.response?.data?.message ||
+        err.message ||
+        "Erreur lors de l'inscription";
       setError(errorMsg);
     } finally {
       setIsLoading(false);
@@ -65,79 +64,95 @@ const Inscription = () => {
 
   if (success) {
     return (
-      <div className="auth-container">
-        <div className="auth-success">
-          <h2>Inscription réussie !</h2>
-          <p>Redirection vers la page de connexion...</p>
-        </div>
+      <div style={{
+        maxWidth: "400px",
+        margin: "50px auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        textAlign: "center"
+      }}>
+        <h2>Inscription réussie !</h2>
+        <p>Redirection vers la page de connexion...</p>
       </div>
     );
   }
 
   return (
-    <div className="auth-container">
-      <div className="auth-form">
-        <h2>Créer un compte</h2>
-        {error && <div className="auth-error">{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              type="text"
-              name="username"
-              placeholder="Nom d'utilisateur"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <input
-              type="password"
-              name="password"
-              placeholder="Mot de passe (6 caractères minimum)"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              minLength="6"
-            />
-          </div>
-          
-          <div className="form-group">
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirmer le mot de passe"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <button 
-            type="submit" 
-            className="auth-button"
-            disabled={isLoading}
-          >
-            {isLoading ? "Chargement..." : "S'inscrire"}
-          </button>
-        </form>
-        
-        <div className="auth-link">
-          Déjà un compte ? <Link to="/login">Se connecter</Link>
+    <div style={{
+      maxWidth: "400px",
+      margin: "50px auto",
+      padding: "20px",
+      border: "1px solid #ccc",
+      borderRadius: "8px"
+    }}>
+      <h2 style={{ textAlign: "center" }}>Créer un compte</h2>
+      {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Nom d'utilisateur :</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            style={{ width: "100%", padding: "8px" }}
+          />
         </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Email :</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Mot de passe :</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            minLength="6"
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Confirmer le mot de passe :</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          style={{
+            width: "100%",
+            padding: "10px",
+            backgroundColor: "#222",
+            color: "#fff",
+            cursor: isLoading ? "not-allowed" : "pointer"
+          }}
+        >
+          {isLoading ? "Chargement..." : "S'inscrire"}
+        </button>
+      </form>
+
+      <div style={{ marginTop: "15px", textAlign: "center" }}>
+        Déjà un compte ? <Link to="/login">Se connecter</Link>
       </div>
     </div>
   );
