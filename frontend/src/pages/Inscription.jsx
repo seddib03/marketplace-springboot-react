@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import './Inscription.css';
 
 const Inscription = () => {
   const [formData, setFormData] = useState({
@@ -64,95 +65,89 @@ const Inscription = () => {
 
   if (success) {
     return (
-      <div style={{
-        maxWidth: "400px",
-        margin: "50px auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        textAlign: "center"
-      }}>
-        <h2>Inscription réussie !</h2>
-        <p>Redirection vers la page de connexion...</p>
+      <div className="success-container">
+        <div className="success-card">
+          <h2>Inscription réussie !</h2>
+          <p>Redirection vers la page de connexion...</p>
+          <div className="loading-spinner"></div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{
-      maxWidth: "400px",
-      margin: "50px auto",
-      padding: "20px",
-      border: "1px solid #ccc",
-      borderRadius: "8px"
-    }}>
-      <h2 style={{ textAlign: "center" }}>Créer un compte</h2>
-      {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
+    <div className="register-container">
+      <div className="register-card">
+        <h2>Créer un compte</h2>
+        {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Nom d'utilisateur :</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Email :</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Mot de passe :</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            minLength="6"
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Confirmer le mot de passe :</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="form-group">
+            <label>Nom d'utilisateur</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              placeholder="Entrez votre pseudo"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Entrez votre email"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Mot de passe</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength="6"
+              placeholder="6 caractères minimum"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Confirmer le mot de passe</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              placeholder="Retapez votre mot de passe"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#222",
-            color: "#fff",
-            cursor: isLoading ? "not-allowed" : "pointer"
-          }}
-        >
-          {isLoading ? "Chargement..." : "S'inscrire"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`submit-btn ${isLoading ? 'loading' : ''}`}
+          >
+            {isLoading ? (
+              <>
+                <span className="spinner"></span>
+                Création en cours...
+              </>
+            ) : "S'inscrire"}
+          </button>
+        </form>
 
-      <div style={{ marginTop: "15px", textAlign: "center" }}>
-        Déjà un compte ? <Link to="/login">Se connecter</Link>
+        <div className="login-redirect">
+          Déjà un compte ? <Link to="/login">Se connecter</Link>
+        </div>
       </div>
     </div>
   );

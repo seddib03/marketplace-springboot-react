@@ -1,69 +1,116 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../services/api";
+import './AddProduct.css';
 
 const AddProduct = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    price: ""
+  });
+  const [message, setMessage] = useState({ text: "", type: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setMessage({ text: "", type: "" });
 
     try {
-      const product = { name, description, price: parseFloat(price) };
-      await addProduct(product);
-      setMessage("Produit ajouté avec succès !");
-      setName("");
-      setDescription("");
-      setPrice("");
-      setTimeout(() => navigate("/"), 1500); // rediriger vers accueil
+      await addProduct({
+        ...formData,
+        price: parseFloat(formData.price)
+      });
+      setMessage({ 
+        text: "Produit ajouté avec succès ! Redirection...", 
+        type: "success" 
+      });
+      setFormData({ name: "", description: "", price: "" });
+      setTimeout(() => navigate("/admin"), 1500);
     } catch (error) {
-      console.error("Erreur lors de l'ajout du produit :", error);
-      setMessage("Erreur lors de l'ajout.");
+      setMessage({ 
+        text: error.response?.data?.message || "Erreur lors de l'ajout du produit", 
+        type: "error" 
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px" }}>
-      <h2>Ajouter un produit</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Nom :</label>
-          <input
-            type="text"
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Description :</label>
-          <textarea
-            value={description}
-            required
-            onChange={(e) => setDescription(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Prix (€) :</label>
-          <input
-            type="number"
-            value={price}
-            required
-            onChange={(e) => setPrice(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
-        <button type="submit" style={{ padding: "10px 20px", backgroundColor: "#222", color: "#fff", border: "none" }}>
-          Ajouter
-        </button>
-      </form>
+    <div className="add-product-container">
+      <div className="add-product-card">
+        <h2>Ajouter un nouveau produit</h2>
+        
+        {message.text && (
+          <div className={`alert-message ${message.type}`}>
+            {message.text}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="product-form">
+          <div className="form-group">
+            <label>Nom du produit</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Nom descriptif du produit"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+              rows="4"
+              placeholder="Décrivez les caractéristiques du produit"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Prix (€)</label>
+            <div className="price-input-container">
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                required
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+              />
+              <span className="currency-symbol">€</span>
+            </div>
+          </div>
+          
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="spinner"></span>
+                Ajout en cours...
+              </>
+            ) : "Ajouter le produit"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

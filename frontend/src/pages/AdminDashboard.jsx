@@ -6,54 +6,43 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("Utilisateur récupéré depuis le localStorage :", user);
-
     if (!user || !Array.isArray(user.roles) || !user.roles.includes("ROLE_ADMIN")) {
       navigate("/admin/login");
     }
   }, [navigate]);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-white rounded-md shadow-md mt-10">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Bienvenue dans le panneau d'administration</h1>
-      <p className="mb-6 text-gray-600 text-lg">Choisissez une action :</p>
-
-      <ul className="space-y-4">
-        <li>
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white rounded-xl shadow-md p-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Tableau de bord administrateur</h1>
+        
+        <div className="space-y-4 mb-8">
           <Link
             to="/admin/add-product"
-            className="block text-blue-600 hover:text-blue-800 font-semibold text-lg transition"
+            className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
           >
-            ➕ Ajouter un produit
+            <h2 className="font-medium text-gray-800">➕ Ajouter un produit</h2>
           </Link>
-        </li>
-        <li>
-          <Link
-            to="/admin/orders"
-            className="block text-blue-600 hover:text-blue-800 font-semibold text-lg transition"
-          >
-            📦 Gérer les commandes (à venir)
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/admin/users"
-            className="block text-blue-600 hover:text-blue-800 font-semibold text-lg transition"
-          >
-            👤 Gérer les utilisateurs (à venir)
-          </Link>
-        </li>
-      </ul>
+          
+          <div className="block p-4 bg-gray-50 rounded-lg opacity-50 cursor-not-allowed">
+            <h2 className="font-medium text-gray-500">📦 Gérer les commandes (bientôt disponible)</h2>
+          </div>
+          
+          <div className="block p-4 bg-gray-50 rounded-lg opacity-50 cursor-not-allowed">
+            <h2 className="font-medium text-gray-500">👤 Gérer les utilisateurs (bientôt disponible)</h2>
+          </div>
+        </div>
 
-      <button
-        onClick={() => {
-          localStorage.removeItem("user");
-          navigate("/admin/login");
-        }}
-        className="mt-8 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-md font-semibold transition"
-      >
-        🔓 Déconnexion
-      </button>
+        <button
+          onClick={() => {
+            localStorage.removeItem("user");
+            navigate("/admin/login");
+          }}
+          className="w-full py-3 px-4 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg transition"
+        >
+          Se déconnecter
+        </button>
+      </div>
     </div>
   );
 };

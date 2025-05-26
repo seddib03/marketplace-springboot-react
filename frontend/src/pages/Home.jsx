@@ -1,47 +1,35 @@
 import React from "react";
-
 import ProductList from "../components/ProductList";
+import './Home.css';
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col 
-      bg-gradient-to-br from-purple-200 via-pink-100 to-yellow-100
-      animate-gradientBackground
-      ">
-      
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-300 shadow-lg">
-        <nav className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <div className="text-3xl font-extrabold text-pink-700 tracking-wide cursor-pointer select-none flex items-center gap-2">
-            <span className="text-yellow-500 animate-pulse">🌸</span> MarketPlace
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-white">
+      {/* Header élégant et simple */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div className="text-2xl font-bold text-pink-600 flex items-center space-x-2">
+            <span className="text-yellow-500">🛍️</span>
+            <span>MarketPlace</span>
           </div>
-
-          {/* Tu peux ajouter des liens ici */}
-          
         </nav>
       </header>
 
-      {/* MAIN CONTENT */}
-      <main className="flex-grow">
-        <section
-          id="about"
-          className="max-w-6xl mx-auto text-center my-20 px-6 py-16 bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-pink-200"
-        >
-          <h1 className="text-6xl font-extrabold text-pink-700 mb-6 tracking-wide drop-shadow-lg">
-            Bienvenue sur{" "}
-            <span className="text-yellow-500 bg-pink-100 px-4 py-2 rounded-xl shadow-lg inline-block">
-              la Marketplace
-            </span>
+      {/* Contenu principal avec espacement amélioré */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Section hero avec animation subtile */}
+        <section className="text-center mb-16 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            Découvrez nos <span className="text-pink-600">produits exclusifs</span>
           </h1>
-          <p className="text-2xl text-pink-900 max-w-4xl mx-auto leading-relaxed">
-            Explorez nos produits exclusifs, profitez d'offres incroyables et achetez en toute simplicité.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Une sélection soignée pour vos besoins. Qualité, style et prix imbattables.
           </p>
         </section>
 
-        <section
-          id="products"
-          className="max-w-7xl mx-auto bg-white rounded-3xl p-10 shadow-3xl border border-pink-300 mb-32"
-        >
+        {/* Section produits avec fond propre */}
+        <section className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-8">Nos produits</h2>
           <ProductList />
         </section>
       </main>

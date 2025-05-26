@@ -1,4 +1,3 @@
-// src/components/ProductList.jsx
 import React, { useEffect, useState } from "react";
 import { getProducts } from "../services/api";
 import ProductCard from "./ProductCard";
@@ -14,10 +13,16 @@ const ProductList = () => {
     });
   }, []);
 
-  if (loading) return <p>Chargement des produits...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

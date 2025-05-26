@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { login } from "../services/api"; // appel vers le backend
+import { login } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { FiMail, FiLock } from "react-icons/fi"; // Pour les icônes
+
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,15 +14,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
       const data = await login(email, password);
-      console.log("Réponse backend :", data);
-
-      // Sauvegarde du token ou user
       localStorage.setItem("user", JSON.stringify(data));
-
-      // Redirection
       navigate("/");
     } catch (err) {
       setError("Email ou mot de passe incorrect.");
@@ -28,34 +25,40 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Connexion</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="login-container">
+      <h2>Connexion</h2>
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Email :</label>
+        <div className="form-group">
+          <label>Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Adresse email"
             required
-            style={{ width: "100%", padding: "8px" }}
           />
+          <FiMail className="icon" />
         </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Mot de passe :</label>
+        <div className="form-group">
+          <label>Mot de passe</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Mot de passe"
             required
-            style={{ width: "100%", padding: "8px" }}
           />
+          <FiLock className="icon" />
         </div>
-        <button type="submit" style={{ width: "100%", padding: "10px", backgroundColor: "#222", color: "#fff", border: "none" }}>
+        <button type="submit" className="login-button">
           Se connecter
         </button>
       </form>
+      <p className="signup-text">
+        Pas encore de compte ?{" "}
+        <a href="/register">Créez-en un</a>
+      </p>
     </div>
   );
 };
