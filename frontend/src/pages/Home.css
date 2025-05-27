@@ -1,4 +1,14 @@
-/* Home.css */
+/* ==== Fonts and Base Styles ==== */
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fef2f2;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==== Animations ==== */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -19,6 +29,23 @@
   }
 }
 
+@keyframes fade-in-stagger {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes background-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ==== Utilities ==== */
 .animate-fade-in-up {
   animation: fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
@@ -27,32 +54,48 @@
   animation: bounce 2s infinite;
 }
 
-/* Smooth transitions */
+.staggered-item {
+  animation: fade-in-stagger 0.6s ease forwards;
+  opacity: 0;
+}
+.staggered-item:nth-child(1) { animation-delay: 0.1s; }
+.staggered-item:nth-child(2) { animation-delay: 0.2s; }
+.staggered-item:nth-child(3) { animation-delay: 0.3s; }
+.staggered-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* ==== Buttons and Links ==== */
 button, a, input {
   transition: all 0.25s ease;
 }
 
-/* Custom scrollbar */
+button:hover, .btn-hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.3);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* ==== Custom Scrollbar ==== */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #ec4899, #f59e0b);
   border-radius: 10px;
 }
 
-/* Input focus styles */
+/* ==== Inputs ==== */
 input:focus {
   outline: none;
-  ring: 2px solid rgba(236, 72, 153, 0.3);
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.2);
 }
 
-/* Product card hover effect */
+/* ==== Product Cards ==== */
 .product-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -62,25 +105,42 @@ input:focus {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Gradient text */
+/* ==== Gradient Text ==== */
 .gradient-text {
+  background-image: linear-gradient(90deg, #ec4899, #f59e0b);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  font-weight: bold;
 }
 
-/* Responsive adjustments */
+/* ==== Hero Section ==== */
+.hero-heading {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+/* ==== Animated Background (optional section) ==== */
+.animated-bg {
+  background: linear-gradient(270deg, #f59e0b, #ec4899, #a855f7);
+  background-size: 600% 600%;
+  animation: background-pan 10s linear infinite;
+}
+
+/* ==== Responsive Design ==== */
 @media (max-width: 768px) {
   .hero-heading {
     font-size: 2.5rem !important;
     line-height: 1.2 !important;
   }
-  
+
   .newsletter-input-group {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .newsletter-input-group input,
   .newsletter-input-group button {
     width: 100%;
