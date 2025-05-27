@@ -8,7 +8,8 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    price: ""
+    price: "",
+    stock: "" // Ajout du champ stock pour correspondre à votre modèle
   });
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,19 +27,22 @@ const AddProduct = () => {
     try {
       await addProduct({
         ...formData,
-        price: parseFloat(formData.price)
+        price: parseFloat(formData.price),
+        stock: parseInt(formData.stock) // Assurez-vous d'envoyer le stock
       });
       setMessage({ 
         text: "Produit ajouté avec succès ! Redirection...", 
         type: "success" 
       });
-      setFormData({ name: "", description: "", price: "" });
+      setFormData({ name: "", description: "", price: "", stock: "" });
       setTimeout(() => navigate("/admin"), 1500);
     } catch (error) {
+      const errorMsg = error.response?.data?.message || error.message || "Erreur lors de l'ajout du produit";
       setMessage({ 
-        text: error.response?.data?.message || "Erreur lors de l'ajout du produit", 
+        text: errorMsg, 
         type: "error" 
       });
+      console.error("Erreur lors de l'ajout du produit :", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -97,6 +101,19 @@ const AddProduct = () => {
             </div>
           </div>
           
+          <div className="form-group">
+            <label>Stock</label>
+            <input
+              type="number"
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+              min="0"
+              placeholder="Quantité en stock"
+            />
+          </div>
+
           <button
             type="submit"
             className="submit-button"

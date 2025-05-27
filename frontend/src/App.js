@@ -12,11 +12,12 @@ import Inscription from "./pages/Inscription";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductList from "./components/ProductList";
 import { CartProvider } from './context/CartContext';
+import ManageOrders from "./pages/ManageOrders";
 
 function App() {
   return (
-    <CartProvider> {/* Fournit le contexte du panier à toute l'application */}
-      <Router> {/* Un seul Router ici */}
+    <CartProvider>
+      <Router>
         <Navbar />
         <div style={{ marginTop: "20px" }}>
           <Routes>
@@ -26,6 +27,7 @@ function App() {
             <Route path="/register" element={<Inscription />} />
             <Route path="/productlist" element={<ProductList />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+
             <Route
               path="/admin"
               element={
@@ -35,6 +37,7 @@ function App() {
               }
             />
             <Route path="/admin/add-product" element={<AddProduct />} />
+            <Route path="/admin/manage-orders" element={<ManageOrders />} />
           </Routes>
         </div>
       </Router>

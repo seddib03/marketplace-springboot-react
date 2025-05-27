@@ -24,9 +24,12 @@ const AdminDashboard = () => {
             <h2 className="font-medium text-gray-800">➕ Ajouter un produit</h2>
           </Link>
           
-          <div className="block p-4 bg-gray-50 rounded-lg opacity-50 cursor-not-allowed">
-            <h2 className="font-medium text-gray-500">📦 Gérer les commandes (bientôt disponible)</h2>
-          </div>
+          <Link
+            to="/admin/manage-orders"
+            className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
+            >
+            <h2 className="font-medium text-gray-800">📦 Gérer les commandes</h2>
+          </Link>
           
           <div className="block p-4 bg-gray-50 rounded-lg opacity-50 cursor-not-allowed">
             <h2 className="font-medium text-gray-500">👤 Gérer les utilisateurs (bientôt disponible)</h2>
