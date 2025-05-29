@@ -129,7 +129,10 @@ export const getUsers = async () => {
   }
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fa7ca1009b95d1a2b7ae379e281cebecde0b38b0
 export const createUser = (userData) => API.post("/users", userData);
 export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
 export const deleteUser = (userId) => API.delete(`/users/${userId}`);
