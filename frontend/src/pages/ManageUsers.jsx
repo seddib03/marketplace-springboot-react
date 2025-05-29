@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./ManageUsers.css";
+
 import {
   getUsers,
   createUser,
@@ -93,7 +95,8 @@ const ManageUsers = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="manage-users-container">
+
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Gérer les utilisateurs</h1>
 
       {success && <p style={{ color: "green" }}>{success}</p>}
@@ -101,7 +104,8 @@ const ManageUsers = () => {
 
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-4">Ajouter un utilisateur</h2>
-        <form onSubmit={handleAddNewUser} className="space-y-4">
+        <form onSubmit={handleAddNewUser} className="add-user-form">
+
           <div>
             <label className="block text-gray-700">Nom d'utilisateur</label>
             <input
@@ -162,7 +166,8 @@ const ManageUsers = () => {
 
       <div className="space-y-4">
         {users.map((user) => (
-          <div key={user.id} className="bg-white rounded-lg shadow-md p-4">
+          <div key={user.id} className="user-card">
+
             <p><strong>ID:</strong> {user.id}</p>
             <p><strong>Nom d'utilisateur:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>

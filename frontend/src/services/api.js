@@ -98,17 +98,25 @@ export const addProduct = async (product) => {
 };
 
 export const placeOrder = async (orderData) => {
-  const res = await fetch("/api/orders", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(orderData),
-  });
-  return res.json();
+  try {
+    const response = await API.post("/orders", orderData);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la création de la commande :", error);
+    throw new Error("Échec de la commande");
+  }
 };
+
 export const getOrdersByUser = async (userId) => {
-  const res = await fetch(`/api/orders/user/${userId}`);
-  return res.json();
+  try {
+    const response = await API.get(`/orders/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des commandes :", error);
+    throw new Error("Échec de la récupération des commandes");
+  }
 };
+
 
 export const getUsers = async () => {
   try {
@@ -120,6 +128,20 @@ export const getUsers = async () => {
     throw new Error("Échec de récupération des utilisateurs");
   }
 };
+
+<<<<<<< HEAD
+export const getUsers = async () => {
+  try {
+    const response = await API.get("/users");
+    console.log("Réponse brute /users:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur dans getUsers:", error);
+    throw new Error("Échec de récupération des utilisateurs");
+  }
+};
+=======
+>>>>>>> 911afd8b6019d66fb456efeeb8f6b459095b6c9a
 export const createUser = (userData) => API.post("/users", userData);
 export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
 export const deleteUser = (userId) => API.delete(`/users/${userId}`);

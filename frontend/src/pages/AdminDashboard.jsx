@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { LogOut, PackagePlus, Users, ShoppingCart } from "lucide-react"; // Icônes modernes
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -12,30 +13,26 @@ const AdminDashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-xl shadow-md p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Tableau de bord administrateur</h1>
-        
-        <div className="space-y-4 mb-8">
-          <Link
-            to="/admin/add-product"
-            className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
-          >
-            <h2 className="font-medium text-gray-800">➕ Ajouter un produit</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 py-12 px-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-10">
+        <h1 className="text-3xl font-bold text-indigo-800 mb-10 text-center">
+          🎯 Tableau de bord Administrateur
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link to="/admin/add-product" className="dashboard-card">
+            <PackagePlus className="w-8 h-8 text-indigo-600 mb-2" />
+            <h2 className="text-lg font-semibold">Ajouter un produit</h2>
           </Link>
-          
-          <Link
-            to="/admin/manage-orders"
-            className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
-          >
-            <h2 className="font-medium text-gray-800">📦 Gérer les commandes</h2>
+
+          <Link to="/admin/manage-orders" className="dashboard-card">
+            <ShoppingCart className="w-8 h-8 text-indigo-600 mb-2" />
+            <h2 className="text-lg font-semibold">Gérer les commandes</h2>
           </Link>
-          
-          <Link
-            to="/admin/manage-users"
-            className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
-          >
-            <h2 className="font-medium text-gray-800">👤 Gérer les utilisateurs</h2>
+
+          <Link to="/admin/manage-users" className="dashboard-card">
+            <Users className="w-8 h-8 text-indigo-600 mb-2" />
+            <h2 className="text-lg font-semibold">Gérer les utilisateurs</h2>
           </Link>
         </div>
 
@@ -44,8 +41,9 @@ const AdminDashboard = () => {
             localStorage.removeItem("user");
             navigate("/admin/login");
           }}
-          className="w-full py-3 px-4 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg transition"
+          className="mt-10 flex items-center justify-center gap-2 w-full py-3 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-semibold transition"
         >
+          <LogOut className="w-5 h-5" />
           Se déconnecter
         </button>
       </div>
