@@ -1,15 +1,14 @@
 // src/pages/Home.jsx
 import React from "react";
 import ProductList from "../components/ProductList";
-import './Home.css';
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-white">
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white">
+      <header className="sticky top-0 z-50 bg-[#0f172a]/90 backdrop-blur-md shadow-lg">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-pink-600 flex items-center space-x-2">
-            <span className="text-yellow-500">🛍️</span>
+          <div className="text-3xl font-bold text-blue-400 flex items-center gap-2">
+            <span>🛍️</span>
             <span>MarketPlace</span>
           </div>
         </nav>
@@ -17,16 +16,16 @@ const Home = () => {
 
       <main className="max-w-7xl mx-auto px-4 py-10">
         <section className="text-center mb-16 animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Découvrez nos <span className="text-pink-600">produits exclusifs</span>
+          <h1 className="text-5xl font-extrabold mb-4">
+            Explorez nos <span className="text-blue-400">produits premium</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Une sélection de produits tendance, à prix imbattables. Achetez maintenant !
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Sélection exclusive de produits tech, maison et lifestyle à prix doux. 🚀
           </p>
         </section>
 
-        <section className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Nos produits</h2>
+        <section className="bg-[#1e293b] rounded-xl shadow-lg p-6">
+          <h2 className="text-3xl font-semibold text-white mb-6">Nos produits</h2>
           <ProductList />
         </section>
       </main>
