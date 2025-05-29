@@ -1,33 +1,7 @@
-// import axios from "axios";
-
-// const API = axios.create({
-//   baseURL: "http://localhost:8083/api", // change si ton backend est ailleurs
-// });
-
-// // Fonction de login
-// export const login = async (email, password) => {
-//   const response = await API.post("/auth/login", {
-//     email,
-//     password,
-//   });
-//   return response.data;
-// };
-// export const getProducts = async () => {
-//   const response = await API.get("/products");
-//   return response.data;
-// };
-// export const addProduct = async (product) => {
-//   const response = await API.post("/products", product);
-//   return response.data;
-// };
-
-
-
-// export default API;
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080/api", // adapter si besoin
+  baseURL: "http://localhost:8080/api", // adapte selon ton backend
   headers: {
     "Content-Type": "application/json",
   },
@@ -54,17 +28,15 @@ API.interceptors.response.use(
   }
 );
 
-// Fonction login avec axios
+// Fonctions API
+
 export const login = async (email, password) => {
   try {
     const response = await API.post("/auth/login", { email, password });
-    // Supposons que la réponse contient { token: "...", user: {...} }
     const userData = response.data;
-    // Stocker les infos utilisateur + token dans le localStorage
     localStorage.setItem("user", JSON.stringify(userData));
     return userData;
   } catch (error) {
-    // Tu peux améliorer la gestion d’erreur ici
     throw new Error(error.response?.data?.message || "Échec de la connexion");
   }
 };
@@ -77,7 +49,6 @@ export const register = async (userData) => {
     throw error;
   }
 };
-
 
 export const getProducts = async () => {
   try {
@@ -117,7 +88,6 @@ export const getOrdersByUser = async (userId) => {
   }
 };
 
-
 export const getUsers = async () => {
   try {
     const response = await API.get("/users");
@@ -129,13 +99,10 @@ export const getUsers = async () => {
   }
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fa7ca1009b95d1a2b7ae379e281cebecde0b38b0
 export const createUser = (userData) => API.post("/users", userData);
-export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
-export const deleteUser = (userId) => API.delete(`/users/${userId}`);
 
+export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
+
+export const deleteUser = (userId) => API.delete(`/users/${userId}`);
 
 export default API;
