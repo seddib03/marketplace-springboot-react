@@ -27,7 +27,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8083/api",
+  baseURL: "http://localhost:8080/api", // adapter si besoin
   headers: {
     "Content-Type": "application/json",
   },
@@ -58,10 +58,13 @@ API.interceptors.response.use(
 export const login = async (email, password) => {
   try {
     const response = await API.post("/auth/login", { email, password });
+    // Supposons que la réponse contient { token: "...", user: {...} }
     const userData = response.data;
+    // Stocker les infos utilisateur + token dans le localStorage
     localStorage.setItem("user", JSON.stringify(userData));
     return userData;
   } catch (error) {
+    // Tu peux améliorer la gestion d’erreur ici
     throw new Error(error.response?.data?.message || "Échec de la connexion");
   }
 };
@@ -74,6 +77,7 @@ export const register = async (userData) => {
     throw error;
   }
 };
+
 
 export const getProducts = async () => {
   try {
@@ -93,43 +97,6 @@ export const addProduct = async (product) => {
   }
 };
 
-// Fonctions pour gérer les utilisateurs
-export const getUsers = async () => {
-  try {
-    const response = await API.get("/users");
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch users");
-  }
-};
-
-export const createUser = async (userData) => {
-  try {
-    const response = await API.post("/users", userData);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to create user");
-  }
-};
-
-export const updateUserRoles = async (userId, roles) => {
-  try {
-    const response = await API.put(`/users/${userId}/roles`, roles);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to update user roles");
-  }
-};
-
-export const deleteUser = async (userId) => {
-  try {
-    const response = await API.delete(`/users/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to delete user");
-  }
-};
-
 export const placeOrder = async (orderData) => {
   const res = await fetch("/api/orders", {
     method: "POST",
@@ -138,10 +105,15 @@ export const placeOrder = async (orderData) => {
   });
   return res.json();
 };
-
 export const getOrdersByUser = async (userId) => {
   const res = await fetch(`/api/orders/user/${userId}`);
   return res.json();
 };
+
+export const getUsers = () => API.get("/users");
+export const createUser = (userData) => API.post("/users", userData);
+export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
+export const deleteUser = (userId) => API.delete(`/users/${userId}`);
+
 
 export default API;
