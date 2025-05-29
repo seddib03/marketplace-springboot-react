@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +38,11 @@ public class OrderController {
         orderService.updateStockOnOrderStatusChange(order); // Appel du service
         return order;
     }
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<Order> getAllOrders(Principal principal) {
+        System.out.println("Utilisateur authentifié : " + principal.getName());
+        return orderRepository.findAll();
+    }
+
 }
