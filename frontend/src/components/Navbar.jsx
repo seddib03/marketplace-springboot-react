@@ -1,28 +1,25 @@
-// src/components/Navbar.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-
-
+import { FaShoppingCart } from "react-icons/fa";
+import './Navbar.css';  // Import des styles
 
 const Navbar = () => {
   return (
-    <nav style={{ padding: "10px 20px", background: "#282c34", color: "white", display: "flex", justifyContent: "space-between" }}>
-      <div>
-        <Link to="/" style={{ color: "white", textDecoration: "none", fontWeight: "bold", fontSize: "1.2rem" }}>
-          Marketplace
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <Link to="/" className="navbar-brand">
+          <span role="img" aria-label="shopping bag" className="emoji">🛍️</span> MarketPlace
         </Link>
       </div>
-      <div>
-        <Link to="/login" style={{ marginRight: 15, color: "white", textDecoration: "none" }}>
-          Connexion
+
+      <div className="navbar-links">
+        <Link to="/login" className="navbar-link">Connexion</Link>
+        <Link to="/register" className="navbar-link">Inscription</Link>
+        <Link to="/cart" className="navbar-link cart-link" aria-label="Panier">
+          <FaShoppingCart size={20} />
+          {/* Pas de compteur ici */}
         </Link>
-        <Link to="/register" style={{ marginRight: 15, color: "white", textDecoration: "none" }}>
-          Inscription
-        </Link>
-        <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
-          Panier
-        </Link>
-        <Link to="/admin" style={{ margin: "0 10px" }}>Espace Admin</Link>
+        <Link to="/admin" className="navbar-link">Espace Admin</Link>
       </div>
     </nav>
   );
