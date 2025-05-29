@@ -110,7 +110,16 @@ export const getOrdersByUser = async (userId) => {
   return res.json();
 };
 
-export const getUsers = () => API.get("/users");
+export const getUsers = async () => {
+  try {
+    const response = await API.get("/users");
+    console.log("Réponse brute /users:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur dans getUsers:", error);
+    throw new Error("Échec de récupération des utilisateurs");
+  }
+};
 export const createUser = (userData) => API.post("/users", userData);
 export const updateUserRoles = (userId, roles) => API.put(`/users/${userId}/roles`, roles);
 export const deleteUser = (userId) => API.delete(`/users/${userId}`);
