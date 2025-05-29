@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUsers, createUser, updateUserRoles, deleteUser } from "../services/api";
+import {
+  getUsers,
+  createUser,
+  updateUserRoles,
+  deleteUser,
+} from "../services/api";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -13,8 +18,8 @@ const ManageUsers = () => {
     password: "",
     roles: ["ROLE_USER"],
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -23,14 +28,19 @@ const ManageUsers = () => {
     } else {
       fetchUsers();
     }
-  }, [navigate, user]);
+  }, [navigate]);
 
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getUsers();
-      setUsers(response.data);
+      const usersData = await getUsers();
+      if (Array.isArray(usersData)) {
+        setUsers(usersData);
+      } else {
+        setError("La réponse de l'API n'est pas une liste valide d'utilisateurs.");
+        console.error("Réponse inattendue :", usersData);
+      }
     } catch (error) {
       setError(`Erreur lors de la récupération des utilisateurs : ${error.message}`);
       console.error("Détails de l'erreur :", error);
@@ -41,12 +51,11 @@ const ManageUsers = () => {
 
   const handleUpdateUserRoles = async (userId, newRoles) => {
     try {
-      const response = await updateUserRoles(userId, newRoles);
-      setUsers(users.map(user => user.id === userId ? response.data : user));
+      const updatedUser = await updateUserRoles(userId, newRoles);
+      setUsers(users.map(user => (user.id === userId ? updatedUser : user)));
       setSuccess("Rôles mis à jour avec succès !");
     } catch (error) {
       setError(`Erreur lors de la mise à jour des rôles : ${error.message}`);
-      console.error("Détails de l'erreur :", error);
     }
   };
 
@@ -58,13 +67,12 @@ const ManageUsers = () => {
       setSuccess("Utilisateur supprimé avec succès !");
     } catch (error) {
       setError(`Erreur lors de la suppression de l'utilisateur : ${error.message}`);
-      console.error("Détails de l'erreur :", error);
     }
   };
 
   const handleNewUserChange = (e) => {
     const { name, value } = e.target;
-    setNewUser(prev => ({ ...prev, [name]: value }));
+    setNewUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddNewUser = async (e) => {
@@ -72,13 +80,12 @@ const ManageUsers = () => {
     setError(null);
     setSuccess(null);
     try {
-      const response = await createUser(newUser);
-      setUsers([...users, response.data]);
+      const createdUser = await createUser(newUser);
+      setUsers([...users, createdUser]);
       setNewUser({ username: "", email: "", password: "", roles: ["ROLE_USER"] });
       setSuccess("Utilisateur ajouté avec succès !");
     } catch (error) {
       setError(`Erreur lors de la création de l'utilisateur : ${error.message}`);
-      console.error("Détails de l'erreur :", error);
     }
   };
 
@@ -159,10 +166,11 @@ const ManageUsers = () => {
             <p><strong>ID:</strong> {user.id}</p>
             <p><strong>Nom d'utilisateur:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Rôles:</strong> 
+            <p>
+              <strong>Rôles:</strong> 
               <select
                 multiple
-                value={Array.from(user.roles)}
+                value={user.roles || []}
                 onChange={(e) => {
                   const selectedRoles = Array.from(e.target.selectedOptions).map(option => option.value);
                   handleUpdateUserRoles(user.id, selectedRoles);
@@ -187,3 +195,5 @@ const ManageUsers = () => {
 };
 
 export default ManageUsers;
+
+
