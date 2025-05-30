@@ -34,10 +34,11 @@ const AdminDashboard = () => {
             <h2 className="admin-text">Ajouter un produit</h2>
           </Link>
 
-          <Link to="/admin/manage-orders" className="admin-link">
-            <ShoppingCart className="admin-icon" />
-            <h2 className="admin-text">Gérer les commandes</h2>
+          <Link to="/admin/statistics" className="admin-link">
+             <ShoppingCart className="admin-icon" />
+             <h2 className="admin-text">Statistiques des produits</h2>
           </Link>
+
 
           <Link to="/admin/manage-users" className="admin-link">
             <Users className="admin-icon" />

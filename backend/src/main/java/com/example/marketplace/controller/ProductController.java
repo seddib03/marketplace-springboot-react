@@ -1,6 +1,7 @@
 package com.example.marketplace.controller;
 
 import com.example.marketplace.model.Product;
+import com.example.marketplace.payload.ProductStatisticsDto;
 import com.example.marketplace.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,10 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+    }
+
+    @GetMapping("/statistics")
+    public ProductStatisticsDto getProductStatistics() {
+        return productService.getProductStatistics();
     }
 }

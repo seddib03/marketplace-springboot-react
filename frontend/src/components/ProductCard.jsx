@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import React from "react";
+import "./ProductCard.css";
 
 const ProductCard = ({ product }) => {
-  const { addToCart } = useContext(CartContext);
-
   return (
-    <div style={{ border: "1px solid #ccc", padding: "15px", borderRadius: "10px", margin: "10px" }}>
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <p><strong>{product.price.toFixed(2)} €</strong></p>
-      <button onClick={() => addToCart(product)}>Ajouter au panier</button>
+    <div className="product-card">
+      <h3 className="product-name">{product.name}</h3>
+      <p className="product-description">{product.description}</p>
+      <p className="product-price">{product.price.toFixed(2)} €</p>
+      <p className={`product-stock ${product.stock < 5 ? "low-stock" : ""}`}>
+        Stock : {product.stock}
+      </p>
     </div>
   );
 };

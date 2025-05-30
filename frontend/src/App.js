@@ -12,7 +12,7 @@ import Inscription from "./pages/Inscription";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductList from "./components/ProductList";
 import { CartProvider } from './context/CartContext';
-import ManageOrders from "./pages/ManageOrders";
+import ProductStatistics from "./pages/ProductStatistics";
 import ManageUsers from "./pages/ManageUsers";
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
               }
             />
             <Route path="/admin/add-product" element={<AddProduct />} />
-            <Route path="/admin/manage-orders" element={<ManageOrders />} />
+            <Route path="/admin/statistics" element={<ProductStatistics />} />
             <Route path="/admin/manage-users" element={<ManageUsers />} />
           </Routes>
         </div>

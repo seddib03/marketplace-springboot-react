@@ -22,11 +22,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService; // Déclaration du service
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

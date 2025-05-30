@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080/api", // adapte selon ton backend
+  baseURL: "http://localhost:8083/api", // adapte selon ton backend
   headers: {
     "Content-Type": "application/json",
   },
@@ -87,6 +87,15 @@ export const getOrdersByUser = async (userId) => {
     throw new Error("Échec de la récupération des commandes");
   }
 };
+export const getProductStatistics = async () => {
+  try {
+    const response = await API.get("/products/statistics");
+    return response.data;
+  } catch (error) {
+    throw new Error("Impossible de récupérer les statistiques des produits");
+  }
+};
+
 
 export const getUsers = async () => {
   try {
